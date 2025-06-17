@@ -13,33 +13,6 @@ return {
     },
   },
   {
-    'folke/snacks.nvim',
-    dependencies = {
-      {
-        'echasnovski/mini.sessions',
-        version = false,
-        config = function()
-          require('mini.sessions').setup()
-        end,
-      },
-    },
-    opts = {
-      scroll = { enabled = false },
-      -- animate = { enabled = false }, -- Doesn't work, setting with vim.g.snacks_animate = false instead
-      dashboard = {
-        preset = {
-          header = [[
-   ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-   ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-   ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-   ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-   ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-   ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
-        },
-      },
-    },
-  },
-  {
     'HiPhish/rainbow-delimiters.nvim',
     lazy = false,
     main = 'rainbow-delimiters.setup',
