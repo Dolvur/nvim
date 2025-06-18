@@ -1,7 +1,8 @@
 return {
   {
     'ibhagwan/fzf-lua',
-    lazy = false,
+    -- lazy = false,
+    event = "VeryLazy",
     dependencies = { 'echasnovski/mini.icons' },
     opts = {},
     config = function(_, opts)

@@ -1,7 +1,7 @@
 return {
   {
     'mikavilpas/yazi.nvim',
-    lazy = false, -- To hijack netrw
+    -- lazy = false, -- To hijack netrw
     -- event = "VeryLazy",
     keys = {
       {

@@ -1,19 +1,12 @@
 return {
   {
     'folke/snacks.nvim',
-    dependencies = {
-      {
-        'echasnovski/mini.sessions',
-        version = false,
-        config = function()
-          require('mini.sessions').setup()
-        end,
-      },
-    },
+    lazy = false,
     opts = {
       -- scroll = { enabled = false },
       -- animate = { enabled = false }, -- Doesn't work, setting with vim.g.snacks_animate = false instead
       indent = {},
+      lazygit = {},
       -- gitbrowse = {}, -- TODO: setup this
       dashboard = {
         preset = {
@@ -25,6 +18,16 @@ return {
    ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
    ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
         },
+      },
+    },
+    keys = {
+      {
+        '<leader>gg',
+        function()
+          Snacks.lazygit()
+        end,
+        desc = 'Lazygit',
+        -- silent = true,
       },
     },
   },

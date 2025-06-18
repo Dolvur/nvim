@@ -4,7 +4,7 @@ return {
     event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
     opts = {
       preset = 'modern',
-      delay = 0,
+      delay = 200,
       spec = {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]oggle' },

@@ -33,6 +33,7 @@ vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 vim.opt.inccommand = 'split'
+vim.o.number = true
 vim.o.relativenumber = true
 
 vim.o.scrolloff = 4
@@ -59,6 +60,7 @@ vim.o.timeoutlen = 300
 
 vim.o.confirm = true
 
+vim.o.timeoutlen = 2000 -- Increase timeout for e.g. mini.surround
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.expandtab = true

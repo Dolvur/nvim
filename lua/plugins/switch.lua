@@ -1,5 +1,3 @@
 return {
-  {
-    'AndrewRadev/switch.vim',
-  },
+  -- 'AndrewRadev/switch.vim',
 }
