@@ -48,5 +48,20 @@ require('lazy').setup({
   -- you can continue same window with `<space>sr` which resumes last telescope search
   { import = 'plugins' },
 }, {
-  -- ui = {},
-})
+    change_detection = {
+      enabled = true,
+      notify = false,
+    },
+    -- ui = {},
+    performance = {
+      rtp = {
+        disabled_plugins = {
+          "gzip",
+          "tarPlugin",
+          "tohtml",
+          "tutor",
+          "zipPlugin",
+        },
+      },
+    },
+  })

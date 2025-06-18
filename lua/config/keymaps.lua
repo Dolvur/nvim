@@ -11,26 +11,6 @@ set('i', 'kj', '<ESC>')
 -- Diagnostic keymaps
 set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
-local transparent = false
--- Toggle transparent background
-vim.keymap.set('n', '<leader>uB', function()
-  transparent = not transparent
-  require('tokyonight').load {
-    style = 'night',
-    transparent = transparent,
-    styles = {
-      sidebars = transparent and 'transparent' or 'dark',
-      floats = transparent and 'transparent' or 'dark',
-    },
-  }
-end, { desc = 'Toggle background' })
-
--- -- navigate within insert mode (with remaps)
--- set("i", "<c-h>", "<Left>", { remap = true })
--- set("i", "<c-l>", "<Right>", { remap = true })
--- set("i", "<c-j>", "<Down>", { remap = true })
--- set("i", "<c-k>", "<Up>", { remap = true })
-
 -- delete single character without copying into register
 set('n', 'x', '"_x')
 
@@ -115,6 +95,8 @@ set('n', '<leader>uV', function()
     virtual_lines = not vim.diagnostic.config().virtual_lines,
   }
 end, { desc = 'Toggle virtual lines' })
+
+set('n', '<leader>L', ':Lazy<CR>', { desc = 'Lazy', silent = true })
 
 -- Toggle git line blame
 -- set("n", "<leader>ub", ":Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle Git blame", silent = true })

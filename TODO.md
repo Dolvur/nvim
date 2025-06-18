@@ -12,3 +12,4 @@
 * nvim-treesitter? Any changes needed?
 * Hovering K? In insert mode?
 * markdown-view
+* LuaSnip
