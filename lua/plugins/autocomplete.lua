@@ -34,11 +34,11 @@ return {
         'folke/lazydev.nvim',
         ft = "lua", -- only load on lua files
         opts = {
-            library = {
-                -- See the configuration section for more details
-                -- Load luvit types when the `vim.uv` word is found
-                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-            },
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
         },
       },
     },
@@ -79,16 +79,51 @@ return {
         nerd_font_variant = 'mono',
       },
 
+      cmdline = {
+        enabled = true,
+        completion = { menu = { auto_show = true } },
+        keymap = {
+          ["<CR>"] = { "accept_and_enter", "fallback" },
+        },
+      },
+
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 200 },
+        menu = {
+          border = 'rounded',
+          scrolloff = 1,
+          scrollbar = true,
+          draw = {
+            columns = {
+              { "kind_icon" },
+              { "label",      "label_description", gap = 1 },
+              { "kind" },
+              { "source_name" },
+            },
+          },
+        },
+        documentation = {
+          window = {
+            border = 'rounded',
+            scrollbar = true,
+            winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
+          },
+          auto_show = true,
+          auto_show_delay_ms = 500
+        },
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = {'lsp', 'path', 'snippets', 'lazydev'},
         providers = {
-          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          cmdline = {
+            min_keyword_length = 2,
+          },
+          lazydev = {
+            module = 'lazydev.integrations.blink',
+            score_offset = 100
+          },
         },
       },
 

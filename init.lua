@@ -23,6 +23,9 @@ vim.g.maplocalleader = ','
 vim.g.have_nerd_font = true
 -- vim.loader.enable()
 
+require 'core.mason-path'
+require 'core.lsp'
+
 require 'config.options'
 require 'config.autocmds'
 require 'config.keymaps'

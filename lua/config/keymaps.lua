@@ -98,6 +98,7 @@ end, { desc = 'Toggle virtual lines' })
 
 set('n', '<leader>L', ':Lazy<CR>', { desc = 'Lazy', silent = true })
 
+set('n', '<leader>cm', ':Mason<CR>', { desc = 'Mason', silent = true })
 -- Toggle git line blame
 -- set("n", "<leader>ub", ":Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle Git blame", silent = true })
 
@@ -114,3 +115,5 @@ set('n', '<leader>L', ':Lazy<CR>', { desc = 'Lazy', silent = true })
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 -- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+require("config/lsp-keymaps")

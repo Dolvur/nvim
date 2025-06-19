@@ -4,5 +4,6 @@ return {
   dependencies = {
     { "mason-org/mason.nvim", opts = {} },
     "neovim/nvim-lspconfig",
+    -- { 'j-hui/fidget.nvim', opts = {} },
   },
 }
