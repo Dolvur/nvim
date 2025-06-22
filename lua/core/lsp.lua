@@ -1,188 +1,201 @@
 -- https://github.com/adibhanna/nvim/blob/main/lua/core/lsp.lua
 
-vim.diagnostic.config({
-    virtual_text = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = true,
-    float = {
-        border = "rounded",
-        source = true,
+vim.diagnostic.config {
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = true,
+  },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '󰅚 ',
+      [vim.diagnostic.severity.WARN] = '󰀪 ',
+      [vim.diagnostic.severity.INFO] = '󰋽 ',
+      [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = "󰅚 ",
-            [vim.diagnostic.severity.WARN] = "󰀪 ",
-            [vim.diagnostic.severity.INFO] = "󰋽 ",
-            [vim.diagnostic.severity.HINT] = "󰌶 ",
-        },
-        numhl = {
-            [vim.diagnostic.severity.ERROR] = "ErrorMsg",
-            [vim.diagnostic.severity.WARN] = "WarningMsg",
-        },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
     },
-})
+  },
+}
 
 local function lsp_status()
-    local bufnr = vim.api.nvim_get_current_buf()
-    local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients { bufnr = bufnr }
 
-    if #clients == 0 then
-        print("󰅚 No LSP clients attached")
-        return
+  if #clients == 0 then
+    print '󰅚 No LSP clients attached'
+    return
+  end
+
+  print('󰒋 LSP Status for buffer ' .. bufnr .. ':')
+  print '─────────────────────────────────'
+
+  for i, client in ipairs(clients) do
+    print(string.format('󰌘 Client %d: %s (ID: %d)', i, client.name, client.id))
+    print('  Root: ' .. (client.config.root_dir or 'N/A'))
+    print('  Filetypes: ' .. table.concat(client.config.filetypes or {}, ', '))
+
+    -- Check capabilities
+    local caps = client.server_capabilities
+    local features = {}
+    if caps.completionProvider then
+      table.insert(features, 'completion')
+    end
+    if caps.hoverProvider then
+      table.insert(features, 'hover')
+    end
+    if caps.definitionProvider then
+      table.insert(features, 'definition')
+    end
+    if caps.referencesProvider then
+      table.insert(features, 'references')
+    end
+    if caps.renameProvider then
+      table.insert(features, 'rename')
+    end
+    if caps.codeActionProvider then
+      table.insert(features, 'code_action')
+    end
+    if caps.documentFormattingProvider then
+      table.insert(features, 'formatting')
     end
 
-    print("󰒋 LSP Status for buffer " .. bufnr .. ":")
-    print("─────────────────────────────────")
-
-    for i, client in ipairs(clients) do
-        print(string.format("󰌘 Client %d: %s (ID: %d)", i, client.name, client.id))
-        print("  Root: " .. (client.config.root_dir or "N/A"))
-        print("  Filetypes: " .. table.concat(client.config.filetypes or {}, ", "))
-
-        -- Check capabilities
-        local caps = client.server_capabilities
-        local features = {}
-        if caps.completionProvider then table.insert(features, "completion") end
-        if caps.hoverProvider then table.insert(features, "hover") end
-        if caps.definitionProvider then table.insert(features, "definition") end
-        if caps.referencesProvider then table.insert(features, "references") end
-        if caps.renameProvider then table.insert(features, "rename") end
-        if caps.codeActionProvider then table.insert(features, "code_action") end
-        if caps.documentFormattingProvider then table.insert(features, "formatting") end
-
-        print("  Features: " .. table.concat(features, ", "))
-        print("")
-    end
+    print('  Features: ' .. table.concat(features, ', '))
+    print ''
+  end
 end
 
-vim.api.nvim_create_user_command('LspStatus', lsp_status, { desc = "Show detailed LSP status" })
+vim.api.nvim_create_user_command('LspStatus', lsp_status, { desc = 'Show detailed LSP status' })
 
 local function check_lsp_capabilities()
-    local bufnr = vim.api.nvim_get_current_buf()
-    local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients { bufnr = bufnr }
 
-    if #clients == 0 then
-        print("No LSP clients attached")
-        return
+  if #clients == 0 then
+    print 'No LSP clients attached'
+    return
+  end
+
+  for _, client in ipairs(clients) do
+    print('Capabilities for ' .. client.name .. ':')
+    local caps = client.server_capabilities
+
+    local capability_list = {
+      { 'Completion', caps.completionProvider },
+      { 'Hover', caps.hoverProvider },
+      { 'Signature Help', caps.signatureHelpProvider },
+      { 'Go to Definition', caps.definitionProvider },
+      { 'Go to Declaration', caps.declarationProvider },
+      { 'Go to Implementation', caps.implementationProvider },
+      { 'Go to Type Definition', caps.typeDefinitionProvider },
+      { 'Find References', caps.referencesProvider },
+      { 'Document Highlight', caps.documentHighlightProvider },
+      { 'Document Symbol', caps.documentSymbolProvider },
+      { 'Workspace Symbol', caps.workspaceSymbolProvider },
+      { 'Code Action', caps.codeActionProvider },
+      { 'Code Lens', caps.codeLensProvider },
+      { 'Document Formatting', caps.documentFormattingProvider },
+      { 'Document Range Formatting', caps.documentRangeFormattingProvider },
+      { 'Rename', caps.renameProvider },
+      { 'Folding Range', caps.foldingRangeProvider },
+      { 'Selection Range', caps.selectionRangeProvider },
+    }
+
+    for _, cap in ipairs(capability_list) do
+      local status = cap[2] and '✓' or '✗'
+      print(string.format('  %s %s', status, cap[1]))
     end
-
-    for _, client in ipairs(clients) do
-        print("Capabilities for " .. client.name .. ":")
-        local caps = client.server_capabilities
-
-        local capability_list = {
-            { "Completion",                caps.completionProvider },
-            { "Hover",                     caps.hoverProvider },
-            { "Signature Help",            caps.signatureHelpProvider },
-            { "Go to Definition",          caps.definitionProvider },
-            { "Go to Declaration",         caps.declarationProvider },
-            { "Go to Implementation",      caps.implementationProvider },
-            { "Go to Type Definition",     caps.typeDefinitionProvider },
-            { "Find References",           caps.referencesProvider },
-            { "Document Highlight",        caps.documentHighlightProvider },
-            { "Document Symbol",           caps.documentSymbolProvider },
-            { "Workspace Symbol",          caps.workspaceSymbolProvider },
-            { "Code Action",               caps.codeActionProvider },
-            { "Code Lens",                 caps.codeLensProvider },
-            { "Document Formatting",       caps.documentFormattingProvider },
-            { "Document Range Formatting", caps.documentRangeFormattingProvider },
-            { "Rename",                    caps.renameProvider },
-            { "Folding Range",             caps.foldingRangeProvider },
-            { "Selection Range",           caps.selectionRangeProvider },
-        }
-
-        for _, cap in ipairs(capability_list) do
-            local status = cap[2] and "✓" or "✗"
-            print(string.format("  %s %s", status, cap[1]))
-        end
-        print("")
-    end
+    print ''
+  end
 end
 
-vim.api.nvim_create_user_command('LspCapabilities', check_lsp_capabilities, { desc = "Show LSP capabilities" })
+vim.api.nvim_create_user_command('LspCapabilities', check_lsp_capabilities, { desc = 'Show LSP capabilities' })
 
 local function lsp_status_short()
-    local bufnr = vim.api.nvim_get_current_buf()
-    local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients { bufnr = bufnr }
 
-    if #clients == 0 then
-        return "" -- Return empty string when no LSP
-    end
+  if #clients == 0 then
+    return '' -- Return empty string when no LSP
+  end
 
-    local names = {}
-    for _, client in ipairs(clients) do
-        table.insert(names, client.name)
-    end
+  local names = {}
+  for _, client in ipairs(clients) do
+    table.insert(names, client.name)
+  end
 
-    return "󰒋 " .. table.concat(names, ",")
+  return '󰒋 ' .. table.concat(names, ',')
 end
 
 local function git_branch()
-    local ok, handle = pcall(io.popen, "git branch --show-current 2>/dev/null")
-    if not ok or not handle then
-        return ""
-    end
-    local branch = handle:read("*a")
-    handle:close()
-    if branch and branch ~= "" then
-        branch = branch:gsub("\n", "")
-        return "󰊢 " .. branch
-    end
-    return ""
+  local ok, handle = pcall(io.popen, 'git branch --show-current 2>/dev/null')
+  if not ok or not handle then
+    return ''
+  end
+  local branch = handle:read '*a'
+  handle:close()
+  if branch and branch ~= '' then
+    branch = branch:gsub('\n', '')
+    return '󰊢 ' .. branch
+  end
+  return ''
 end
 
 local function formatter_status()
-    local ok, conform = pcall(require, "conform")
-    if not ok then
-        return ""
-    end
+  local ok, conform = pcall(require, 'conform')
+  if not ok then
+    return ''
+  end
 
-    local formatters = conform.list_formatters_to_run(0)
-    if #formatters == 0 then
-        return ""
-    end
+  local formatters = conform.list_formatters_to_run(0)
+  if #formatters == 0 then
+    return ''
+  end
 
-    local formatter_names = {}
-    for _, formatter in ipairs(formatters) do
-        table.insert(formatter_names, formatter.name)
-    end
+  local formatter_names = {}
+  for _, formatter in ipairs(formatters) do
+    table.insert(formatter_names, formatter.name)
+  end
 
-    return "󰉿 " .. table.concat(formatter_names, ",")
+  return '󰉿 ' .. table.concat(formatter_names, ',')
 end
 
 local function linter_status()
-    local ok, lint = pcall(require, "lint")
-    if not ok then
-        return ""
-    end
+  local ok, lint = pcall(require, 'lint')
+  if not ok then
+    return ''
+  end
 
-    local linters = lint.linters_by_ft[vim.bo.filetype] or {}
-    if #linters == 0 then
-        return ""
-    end
+  local linters = lint.linters_by_ft[vim.bo.filetype] or {}
+  if #linters == 0 then
+    return ''
+  end
 
-    return "󰁨 " .. table.concat(linters, ",")
+  return '󰁨 ' .. table.concat(linters, ',')
 end
 -- Safe wrapper functions for statusline
 local function safe_git_branch()
-    local ok, result = pcall(git_branch)
-    return ok and result or ""
+  local ok, result = pcall(git_branch)
+  return ok and result or ''
 end
 
 local function safe_lsp_status()
-    local ok, result = pcall(lsp_status_short)
-    return ok and result or ""
+  local ok, result = pcall(lsp_status_short)
+  return ok and result or ''
 end
 
 local function safe_formatter_status()
-    local ok, result = pcall(formatter_status)
-    return ok and result or ""
+  local ok, result = pcall(formatter_status)
+  return ok and result or ''
 end
 
 local function safe_linter_status()
-    local ok, result = pcall(linter_status)
-    return ok and result or ""
+  local ok, result = pcall(linter_status)
+  return ok and result or ''
 end
 
 _G.git_branch = safe_git_branch
@@ -192,14 +205,14 @@ _G.linter_status = safe_linter_status
 
 -- THEN set the statusline
 vim.opt.statusline = table.concat({
-    "%{v:lua.git_branch()}",       -- Git branch
-    "%f",                          -- File name
-    "%m",                          -- Modified flag
-    "%r",                          -- Readonly flag
-    "%=",                          -- Right align
-    "%{v:lua.linter_status()}",    -- Linter status
-    "%{v:lua.formatter_status()}", -- Formatter status
-    "%{v:lua.lsp_status()}",       -- LSP status
-    " %l:%c",                      -- Line:Column
-    " %p%%"                        -- Percentage through file
-}, " ")
+  '%{v:lua.git_branch()}', -- Git branch
+  '%f', -- File name
+  '%m', -- Modified flag
+  '%r', -- Readonly flag
+  '%=', -- Right align
+  '%{v:lua.linter_status()}', -- Linter status
+  '%{v:lua.formatter_status()}', -- Formatter status
+  '%{v:lua.lsp_status()}', -- LSP status
+  ' %l:%c', -- Line:Column
+  ' %p%%', -- Percentage through file
+}, ' ')

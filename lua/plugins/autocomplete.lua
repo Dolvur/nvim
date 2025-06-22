@@ -1,7 +1,7 @@
 return {
   { -- Autocompletion
     'saghen/blink.cmp',
-    event = 'VeryLazy',
+    lazy = false,
     version = '1.*',
     dependencies = {
       -- Snippet Engine
@@ -32,12 +32,12 @@ return {
       },
       {
         'folke/lazydev.nvim',
-        ft = "lua", -- only load on lua files
+        ft = 'lua', -- only load on lua files
         opts = {
           library = {
             -- See the configuration section for more details
             -- Load luvit types when the `vim.uv` word is found
-            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
           },
         },
       },
@@ -81,9 +81,12 @@ return {
 
       cmdline = {
         enabled = true,
-        completion = { menu = { auto_show = true } },
+        completion = {
+          menu = { auto_show = true },
+          accept = { auto_brackets = { enabled = true } },
+        },
         keymap = {
-          ["<CR>"] = { "accept_and_enter", "fallback" },
+          ['<CR>'] = { 'accept_and_enter', 'fallback' },
         },
       },
 
@@ -96,11 +99,12 @@ return {
           scrollbar = true,
           draw = {
             columns = {
-              { "kind_icon" },
-              { "label",      "label_description", gap = 1 },
-              { "kind" },
-              { "source_name" },
+              { 'kind_icon' },
+              { 'label', 'label_description', gap = 1 },
+              { 'kind' },
+              { 'source_name' },
             },
+            treesitter = { 'lsp' },
           },
         },
         documentation = {
@@ -110,20 +114,24 @@ return {
             winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
           },
           auto_show = true,
-          auto_show_delay_ms = 500
+          auto_show_delay_ms = 500,
         },
+        ghost_text = { enabled = true },
       },
 
       sources = {
-        default = {'lsp', 'path', 'snippets', 'lazydev'},
+        default = { 'snippets', 'lsp', 'path', 'lazydev' },
         providers = {
           cmdline = {
             min_keyword_length = 2,
           },
           lazydev = {
             module = 'lazydev.integrations.blink',
-            score_offset = 100
+            score_offset = 100,
           },
+          -- snippets = {
+          --   score_offset = 3,
+          -- },
         },
       },
 
@@ -137,7 +145,6 @@ return {
       --
       -- See :h blink-cmp-config-fuzzy for more information
       fuzzy = { implementation = 'prefer_rust_with_warning' },
-      -- fuzzy = { implementation = 'lua' },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },

@@ -9,7 +9,6 @@ return {
       'html',
       'eslint',
       'dockerls',
-      'docker_compose_language_server',
       'tailwindcss',
     },
   },

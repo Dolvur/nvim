@@ -9,7 +9,9 @@ set('i', 'kj', '<ESC>')
 
 -- TODO: Check if to keep this keymap from kickstart
 -- Diagnostic keymaps
-set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+set('n', '<leader>q', vim.diagnostic.setloclist, {
+  desc = 'Open diagnostic [Q]uickfix list',
+})
 
 -- delete single character without copying into register
 set('n', 'x', '"_x')
@@ -116,4 +118,4 @@ set('n', '<leader>cm', ':Mason<CR>', { desc = 'Mason', silent = true })
 -- or just use <C-\><C-n> to exit terminal mode
 -- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-require("config/lsp-keymaps")
+require 'config/lsp-keymaps'
