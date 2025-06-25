@@ -9,3 +9,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
+
+-- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+--   -- buffer = event.buf,
+--   -- group = highlight_augroup,
+--   callback = vim.lsp.buf.document_highlight,
+-- })
+--
+-- vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+--   -- buffer = event.buf,
+--   -- group = highlight_augroup,
+--   callback = vim.lsp.buf.clear_references,
+-- })

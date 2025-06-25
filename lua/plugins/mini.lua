@@ -11,6 +11,8 @@ return {
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
 
+      -- require('mini.map').setup()
+
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -18,49 +20,49 @@ return {
       -- - sr)'  - [S]urround [R]eplace [)] [']
       --
       -- To prevent timeout from triggering native key
-      vim.keymap.set({ "n", "x" }, "s", "<Nop>") 
+      vim.keymap.set({ 'n', 'x' }, 's', '<Nop>')
       require('mini.surround').setup()
 
-      require('mini.splitjoin').setup({
+      require('mini.splitjoin').setup {
         mappings = {
           toggle = 'gS',
           split = '',
           join = '',
-        }
-      })
+        },
+      }
 
       require('mini.bracketed').setup()
 
       require('mini.cursorword').setup()
 
-      local hipatterns = require('mini.hipatterns')
-      hipatterns.setup({
-          highlighters = {
-            -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-            fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-            hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
-            todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
-            note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
+      local hipatterns = require 'mini.hipatterns'
+      hipatterns.setup {
+        highlighters = {
+          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+          hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+          todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+          note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
 
-            -- Highlight hex color strings (`#rrggbb`) using that color
-            hex_color = hipatterns.gen_highlighter.hex_color(),
-          },
-        })
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      }
 
-      local notify = require('mini.notify')
+      local notify = require 'mini.notify'
       notify.setup()
-      vim.notify = notify.make_notify({
+      vim.notify = notify.make_notify {
         ERROR = { duration = 5000 },
         WARN = { duration = 4000 },
         INFO = { duration = 3000 },
-      })
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup {use_icons = vim.g.have_nerd_font}
+      statusline.setup { use_icons = vim.g.have_nerd_font }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
