@@ -1,7 +1,8 @@
 return {
   { -- Autocompletion
     'saghen/blink.cmp',
-    lazy = false,
+    -- lazy = false,
+    event = 'VeryLazy',
     version = '1.*',
     dependencies = {
       -- Snippet Engine
@@ -83,7 +84,6 @@ return {
         enabled = true,
         completion = {
           menu = { auto_show = true },
-          accept = { auto_brackets = { enabled = true } },
         },
         keymap = {
           ['<CR>'] = { 'accept_and_enter', 'fallback' },
