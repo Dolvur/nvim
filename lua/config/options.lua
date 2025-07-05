@@ -21,6 +21,8 @@ vim.o.background = 'dark'
 vim.o.splitright = true
 vim.o.splitbelow = true
 
+vim.o.virtualedit = 'all'
+
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
