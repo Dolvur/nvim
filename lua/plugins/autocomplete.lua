@@ -5,7 +5,6 @@ return {
     event = 'VeryLazy',
     version = '1.*',
     dependencies = {
-      -- Snippet Engine
       {
         'L3MON4D3/LuaSnip',
         version = '2.*',
@@ -100,7 +99,7 @@ return {
           draw = {
             columns = {
               { 'kind_icon' },
-              { 'label', 'label_description', gap = 1 },
+              { 'label',      'label_description', gap = 1 },
               { 'kind' },
               { 'source_name' },
             },
@@ -147,7 +146,15 @@ return {
       fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- Shows a signature help window while you type arguments for a function
-      signature = { enabled = true },
+      signature = {
+        enabled = true,
+        trigger = {
+          show_on_insert_on_trigger_character = false,
+          show_on_insert = true,
+        },
+        -- show_delay_ms = 0,
+        -- hide_delay_ms = 4000,
+      },
     },
   },
 }

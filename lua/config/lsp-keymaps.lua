@@ -9,11 +9,10 @@ end, { desc = 'Toggle Diagnostics' })
 
 map('<leader>cd', function()
   vim.diagnostic.open_float()
-end, 'Goto Definition')
+end, 'Show diagnostics')
 
-map('gd', function()
-  vim.lsp.buf.definition()
-end, 'Goto Definition')
+map('gd', '<cmd>FzfLua lsp_definitions jump1=true ignore_current_line=true<CR>', 'Goto Definition')
+map('grr', '<cmd>FzfLua lsp_references jump1=true ignore_current_line=true<CR>', 'References')
 
 map('gy', function()
   vim.lsp.buf.type_definition()

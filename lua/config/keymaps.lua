@@ -7,6 +7,9 @@ set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 set('i', 'jk', '<ESC>')
 set('i', 'kj', '<ESC>')
 
+set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+
 -- TODO: Check if to keep this keymap from kickstart
 -- Diagnostic keymaps
 set('n', '<leader>q', vim.diagnostic.setloclist, {
@@ -78,6 +81,7 @@ set('v', '<S-Tab>', '<gv')
 
 -- Open alternative file
 set('n', 'ö', ':e#<CR>', { silent = true })
+set('n', '\\', ':e#<CR>', { silent = true })
 
 -- restart LSP
 set('n', '<leader>cL', ':LspRestart<CR>', { silent = true, desc = 'Restart the LSP server' })

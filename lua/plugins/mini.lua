@@ -49,13 +49,13 @@ return {
         },
       }
 
-      local notify = require 'mini.notify'
-      notify.setup()
-      vim.notify = notify.make_notify {
-        ERROR = { duration = 5000 },
-        WARN = { duration = 4000 },
-        INFO = { duration = 3000 },
-      }
+      -- local notify = require 'mini.notify'
+      -- notify.setup()
+      -- vim.notify = notify.make_notify {
+      --   ERROR = { duration = 5000 },
+      --   WARN = { duration = 4000 },
+      --   INFO = { duration = 3000 },
+      -- }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,

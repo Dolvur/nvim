@@ -4,7 +4,24 @@ return {
     -- lazy = false,
     event = 'VeryLazy',
     dependencies = { 'echasnovski/mini.icons' },
-    opts = {},
+    opts = {
+      winopts = {
+        width = 0.8,
+        height = 0.8,
+        row = 0.5,
+        col = 0.5,
+        preview = {
+          scrollchars = { "┃", "" },
+        },
+      },
+      -- files = {
+      --   cwd_prompt = false,
+      --   actions = {
+      --     ["alt-i"] = { require('fzf-lua').config.actions.toggle_ignore },
+      --     ["alt-h"] = { require('fzf-lua').config.actions.toggle_hidden },
+      --   },
+      -- },
+    },
     config = function(_, opts)
       local set = vim.keymap.set
       local fzf = require 'fzf-lua'

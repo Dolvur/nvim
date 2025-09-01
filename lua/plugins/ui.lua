@@ -14,7 +14,7 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
-    lazy = false,
+    -- lazy = false,
     main = 'rainbow-delimiters.setup',
     opts = {},
     event = 'BufRead',

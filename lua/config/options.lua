@@ -21,7 +21,9 @@ vim.o.background = 'dark'
 vim.o.splitright = true
 vim.o.splitbelow = true
 
-vim.o.virtualedit = 'all'
+vim.o.virtualedit = 'block'
+
+vim.o.cmdheight = 0
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -67,3 +69,5 @@ vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.expandtab = true
 vim.o.autoindent = true
+
+vim.opt.winborder = "rounded"
