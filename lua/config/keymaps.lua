@@ -107,12 +107,6 @@ set('n', '<leader>L', ':Lazy<CR>', { desc = 'Lazy', silent = true })
 set('n', '<leader>cm', ':Mason<CR>', { desc = 'Mason', silent = true })
 -- Toggle git line blame
 -- set("n", "<leader>ub", ":Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle Git blame", silent = true })
-
--- Keep cursor in middle
--- set("n", "<C-d>", "<C-d>zz")
--- set("n", "<C-u>", "<C-u>zz")
--- set("n", "<C-b>", "<C-b>zz")
--- set("n", "<C-f>", "<C-f>zz")
 --
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
