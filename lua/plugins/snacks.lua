@@ -3,11 +3,10 @@ return {
     'folke/snacks.nvim',
     lazy = false,
     opts = {
-      -- scroll = { enabled = false },
-      -- animate = { enabled = false }, -- Doesn't work, setting with vim.g.snacks_animate = false instead
       indent = {},
       lazygit = {},
-      -- gitbrowse = {}, -- TODO: setup this
+      gitbrowse = {},
+      input = {},
       dashboard = {
         preset = {
           header = [[
@@ -27,7 +26,13 @@ return {
           Snacks.lazygit()
         end,
         desc = 'Lazygit',
-        -- silent = true,
+      },
+      {
+        '<leader>gb',
+        function()
+          Snacks.gitbrowse()
+        end,
+        desc = 'Git Browse',
       },
     },
   },
