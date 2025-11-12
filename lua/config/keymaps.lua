@@ -102,6 +102,9 @@ set('n', '<leader>uV', function()
   }
 end, { desc = 'Toggle virtual lines' })
 
+-- Toggle word wrap
+set('n', '<leader>uw', ':set wrap!<CR>', { desc = 'Toggle word wrap', silent = true })
+
 set('n', '<leader>L', ':Lazy<CR>', { desc = 'Lazy', silent = true })
 
 set('n', '<leader>cm', ':Mason<CR>', { desc = 'Mason', silent = true })
