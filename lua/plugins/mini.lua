@@ -2,6 +2,9 @@ return {
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     event = 'VeryLazy',
+    -- dependencies = {
+    --   'nvim-treesitter/nvim-treesitter-textobjects',
+    -- },
     config = function()
       -- Better Around/Inside textobjects
       --
@@ -9,7 +12,19 @@ return {
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
+      local ai = require("mini.ai")
+      require('mini.ai').setup {
+        n_lines = 500,
+        -- custom_textobjects = {
+        --   a = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }), -- function arguments
+        --   c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),         -- class
+        --   o = ai.gen_spec.treesitter({                                                    -- code block
+        --     a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+        --     i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+        --   }),
+        --   f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+        -- },
+      }
 
       -- require('mini.map').setup()
 
