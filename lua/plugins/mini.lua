@@ -12,7 +12,7 @@ return {
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
-      local ai = require("mini.ai")
+      local ai = require 'mini.ai'
       require('mini.ai').setup {
         n_lines = 500,
         -- custom_textobjects = {
@@ -43,6 +43,16 @@ return {
           toggle = 'gS',
           split = '',
           join = '',
+        },
+      }
+
+      require('mini.cmdline').setup()
+
+      require('mini.pairs').setup {
+        modes = {
+          insert = true,
+          command = true,
+          terminal = false,
         },
       }
 

@@ -1,8 +1,7 @@
 return {
   { -- Autocompletion
     'saghen/blink.cmp',
-    -- lazy = false,
-    event = 'VeryLazy',
+    event = { 'InsertEnter', 'CmdlineEnter' },
     version = '1.*',
     dependencies = {
       {
@@ -74,87 +73,68 @@ return {
       },
 
       appearance = {
-        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = 'mono',
       },
-
-      cmdline = {
-        enabled = true,
-        completion = {
-          menu = { auto_show = true },
-        },
-        keymap = {
-          ['<CR>'] = { 'accept_and_enter', 'fallback' },
-        },
-      },
-
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        menu = {
-          border = 'rounded',
-          scrolloff = 1,
-          scrollbar = true,
-          draw = {
-            columns = {
-              { 'kind_icon' },
-              { 'label',      'label_description', gap = 1 },
-              { 'kind' },
-              { 'source_name' },
-            },
-            treesitter = { 'lsp' },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 100,
+          window = {
+            -- border = 'bold',
+            -- border = 'rounded',
+            -- scrollbar = true,
+            -- winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
           },
         },
-        documentation = {
-          window = {
-            border = 'rounded',
-            scrollbar = true,
-            winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
-          },
-          auto_show = true,
-          auto_show_delay_ms = 500,
+        menu = {
+          -- border = 'bold',
+          scrollbar = false,
+          -- border = 'rounded',
+          -- scrolloff = 1,
+          -- scrollbar = true,
+          -- draw = {
+          --   columns = {
+          --     { 'kind_icon' },
+          --     { 'label', 'label_description', gap = 1 },
+          --     { 'kind' },
+          --     { 'source_name' },
+          --   },
+          --   treesitter = { 'lsp' },
+          -- },
         },
         ghost_text = { enabled = true },
       },
-
+      snippets = { preset = 'luasnip' },
       sources = {
-        default = { 'snippets', 'lsp', 'path', 'lazydev' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
-          cmdline = {
-            min_keyword_length = 2,
-          },
           lazydev = {
+            name = 'LazyDev',
             module = 'lazydev.integrations.blink',
             score_offset = 100,
           },
-          -- snippets = {
-          --   score_offset = 3,
-          -- },
         },
       },
-
-      snippets = { preset = 'luasnip' },
-
-      -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-      -- which automatically downloads a prebuilt binary when enabled.
-      --
-      -- By default, we use the Lua implementation instead, but you may enable
-      -- the rust implementation via `'prefer_rust_with_warning'`
-      --
-      -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
-
       -- Shows a signature help window while you type arguments for a function
       signature = {
         enabled = true,
-        trigger = {
-          show_on_insert_on_trigger_character = false,
-          show_on_insert = true,
-        },
+        -- trigger = {
+        --   show_on_insert_on_trigger_character = false,
+        --   show_on_insert = true,
+        -- },
         -- show_delay_ms = 0,
         -- hide_delay_ms = 4000,
       },
+      cmdline = {
+        enabled = false,
+        completion = {
+          menu = { auto_show = true },
+        },
+      },
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
+      opts_extend = { 'sources.default' },
     },
   },
 }

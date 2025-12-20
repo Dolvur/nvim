@@ -11,6 +11,7 @@ return {
       'eslint',
       'dockerls',
       'tailwindcss',
+      'biome', -- prettier alternative
     },
   },
   dependencies = {
