@@ -3,12 +3,18 @@ local set = vim.keymap.set
 -- Clear highlights
 set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Bind PageUp to Half-Page Up
+vim.keymap.set({ 'n', 'v' }, '<PageUp>', '<C-u>', { noremap = true, silent = true })
+
+-- Bind PageDown to Half-Page Down
+vim.keymap.set({ 'n', 'v' }, '<PageDown>', '<C-d>', { noremap = true, silent = true })
+
 -- use jk to exit insert mode
 set('i', 'jk', '<ESC>')
 set('i', 'kj', '<ESC>')
 
-set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
+set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
 
 -- TODO: Check if to keep this keymap from kickstart
 -- Diagnostic keymaps
@@ -63,8 +69,15 @@ vim.keymap.set('n', '<C-k>', function()
   smart_move('k', '-U')
 end, { silent = true })
 vim.keymap.set('n', '<C-l>', function()
-  smart_move('l', '-R')
+      smart_move('l', '-R')
 end, { silent = true })
+
+FORMAT_ON_SAVE_ENABLED = true
+vim.keymap.set('n', '<leader>uf', function()
+  FORMAT_ON_SAVE_ENABLED = not FORMAT_ON_SAVE_ENABLED
+  local status = FORMAT_ON_SAVE_ENABLED and 'enabled' or 'disabled'
+  vim.notify('Autoformat on save ' .. status)
+end, { desc = 'Toggle autoformat on save' })
 
 -- Resize windows
 set('n', '<C-w>j', ':resize -2<CR>', { silent = true })
