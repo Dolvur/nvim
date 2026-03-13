@@ -69,7 +69,7 @@ vim.keymap.set('n', '<C-k>', function()
   smart_move('k', '-U')
 end, { silent = true })
 vim.keymap.set('n', '<C-l>', function()
-      smart_move('l', '-R')
+  smart_move('l', '-R')
 end, { silent = true })
 
 FORMAT_ON_SAVE_ENABLED = true

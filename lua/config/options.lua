@@ -8,9 +8,8 @@ vim.schedule(function()
 end)
 
 vim.g.snacks_animate = false
--- vim.o.cursorcolumn = true
-vim.o.colorcolumn = '80'
 
+vim.o.colorcolumn = '80'
 vim.o.cursorline = true
 
 vim.o.termguicolors = true
@@ -62,4 +61,4 @@ vim.o.shiftwidth = 2
 vim.o.expandtab = true
 vim.o.autoindent = true
 
-vim.opt.winborder = "rounded"
+vim.opt.winborder = 'rounded'
