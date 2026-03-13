@@ -42,35 +42,29 @@ return {
     }
     local group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true })
 
-    local ignore_filetypes = {
-      'checkhealth',
-      'lazy',
-      'mason',
-      'snacks_dashboard',
-      'snacks_notif',
-      'snacks_win',
-    }
-
-    -- Auto-install parsers and enable highlighting on FileType
     vim.api.nvim_create_autocmd('FileType', {
       group = group,
-      desc = 'Enable treesitter highlighting and indentation',
+      desc = 'Enable treesitter when a language exists for this filetype',
       callback = function(event)
-        if vim.tbl_contains(ignore_filetypes, event.match) then
+        local ft = vim.bo[event.buf].filetype
+        if ft == '' then
           return
         end
 
-        local lang = vim.treesitter.language.get_lang(event.match) or event.match
-        local buf = event.buf
+        local lang = vim.treesitter.language.get_lang(ft)
+        if not lang then
+          -- No TS language for this filetype => don't start, don't install, no warnings.
+          return
+        end
 
-        -- Start highlighting immediately (works if parser exists)
-        pcall(vim.treesitter.start, buf, lang)
+        -- Start highlighting
+        pcall(vim.treesitter.start, event.buf, lang)
 
-        -- Enable treesitter indentation
-        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        -- Optional: only set indentexpr if you really want TS indent everywhere it exists
+        vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
-        -- Install missing parsers (async, no-op if already installed)
-        ts.install { lang }
+        -- Optional: install missing parser (but I'd generally avoid auto-install on FileType)
+        -- ts.install { lang }
       end,
     })
   end,
