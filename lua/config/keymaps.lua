@@ -1,0 +1,33 @@
+local set = vim.keymap.set
+
+-- Clear highlights
+set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+set('v', 'J', ":m '>+1<CR>gv=gv", { silent = true })
+set('v', 'K', ":m '<-2<CR>gv=gv", { silent = true })
+
+-- Open alternative file
+set('n', 'ö', ':e#<CR>', { silent = true })
+set('n', '\\', ':e#<CR>', { silent = true })
+
+-- Override moving between windows to use Tmux support
+local function smart_move(direction, tmux_cmd)
+  local curwin = vim.api.nvim_get_current_win()
+  vim.cmd('wincmd ' .. direction)
+  if curwin == vim.api.nvim_get_current_win() then
+    vim.fn.system('tmux select-pane ' .. tmux_cmd)
+  end
+end
+
+vim.keymap.set('n', '<C-h>', function()
+  smart_move('h', '-L')
+end, { silent = true })
+vim.keymap.set('n', '<C-j>', function()
+  smart_move('j', '-D')
+end, { silent = true })
+vim.keymap.set('n', '<C-k>', function()
+  smart_move('k', '-U')
+end, { silent = true })
+vim.keymap.set('n', '<C-l>', function()
+  smart_move('l', '-R')
+end, { silent = true })
