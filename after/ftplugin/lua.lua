@@ -1,2 +1,0 @@
--- Setting local settings for lua files
--- vim.opt_local.colorcolumn = '80'
