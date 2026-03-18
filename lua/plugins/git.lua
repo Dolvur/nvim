@@ -12,10 +12,5 @@ require('gitsigns').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>gd', function()
-  vim.cmd 'Gitsigns diffthis'
-end, { desc = 'Gitsigns: Diffview' })
-
-vim.keymap.set('n', '<leader>gb', function()
-  vim.cmd 'Gitsigns blame_line'
-end, { desc = 'Gitsigns: Blame line' })
+vim.keymap.set('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>', { desc = 'Gitsigns: Diffview' })
+vim.keymap.set('n', '<leader>gb', '<cmd>Gitsigns blame_line<CR>', { desc = 'Gitsigns: Blame line' })

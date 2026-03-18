@@ -10,6 +10,12 @@ set('v', 'K', ":m '<-2<CR>gv=gv", { silent = true })
 set('n', 'ö', ':e#<CR>', { silent = true })
 set('n', '\\', ':e#<CR>', { silent = true })
 
+-- indent tab mappings
+set('n', '<S-Tab>', '<<_')
+set('i', '<S-Tab>', '<C-D>')
+set('v', '<Tab>', '>gv')
+set('v', '<S-Tab>', '<gv')
+
 -- Override moving between windows to use Tmux support
 local function smart_move(direction, tmux_cmd)
   local curwin = vim.api.nvim_get_current_win()
