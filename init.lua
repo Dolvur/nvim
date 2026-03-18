@@ -11,7 +11,8 @@ require 'plugins.whichkey'
 require 'plugins.lsp'
 require 'plugins.explorer'
 require 'plugins.fzf'
--- require 'plugins.conform'
+require 'plugins.git'
+require 'plugins.conform'
 -- require 'plugins.rainbow-delimiters'
 
 
