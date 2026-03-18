@@ -1,7 +1,7 @@
-vim.pack.add({
+vim.pack.add {
   'https://github.com/nvim-treesitter/nvim-treesitter',
   -- 'windwp/nvim-ts-autotag',
-})
+}
 
 -- local group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true })
 -- vim.api.nvim_create_autocmd('FileType', {

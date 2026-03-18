@@ -15,6 +15,4 @@ require 'plugins.git'
 require 'plugins.conform'
 -- require 'plugins.rainbow-delimiters'
 
-
-vim.lsp.enable({'lua_ls'})
-
+vim.lsp.enable { 'lua_ls' }
