@@ -1,5 +1,10 @@
 local set = vim.keymap.set
 
+-- vim.pack
+set('n', '<leader>cp', function()
+  vim.pack.update()
+end, { desc = 'vim.pack update' })
+
 -- Clear highlights
 set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
