@@ -6,8 +6,9 @@ require 'config.lsp-keymaps'
 
 require 'plugins.colorscheme' -- Load first so colorscheme is inherited
 require 'plugins.mini' -- Load early since it contains setup
+require 'plugins.snacks'
 require 'plugins.treesitter'
-require 'plugins.whichkey'
+-- require 'plugins.whichkey'
 require 'plugins.lsp'
 require 'plugins.explorer'
 require 'plugins.fzf'
