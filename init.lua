@@ -16,6 +16,7 @@ require 'plugins.git'
 require 'plugins.conform'
 require 'plugins.undotree'
 require 'plugins.autocomplete'
+require 'plugins.quicker'
 require 'plugins.rainbow-delimiters'
 
 vim.lsp.enable { 'lua_ls' }
