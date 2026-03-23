@@ -2,7 +2,17 @@ vim.pack.add {
   'https://github.com/ibhagwan/fzf-lua',
 }
 
-require('fzf-lua').setup()
+require('fzf-lua').setup {
+  keymap = {
+    builtin = {
+      ['<c-d>'] = 'preview-page-down',
+      ['<c-u>'] = 'preview-page-up',
+    },
+    fzf = {
+      ['ctrl-q'] = 'select-all+accept',
+    },
+  },
+}
 
 local set = vim.keymap.set
 
