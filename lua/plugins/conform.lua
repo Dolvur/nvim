@@ -18,7 +18,7 @@ require('conform').setup {
     yaml = { 'prettier' },
     markdown = { 'prettier' },
     graphql = { 'prettier' },
-    liquid = { 'prettier' },
+    bash = { 'prettier' },
   },
   format_on_save = function(bufnr)
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
@@ -27,6 +27,10 @@ require('conform').setup {
     return { timeout_ms = 500, lsp_format = 'fallback' }
   end,
 }
+
+vim.keymap.set('n', '<leader>cf', function()
+  require('conform').format { async = true, lsp_format = 'fallback' }
+end, { desc = 'Format buffer' })
 
 vim.keymap.set('n', '<leader>uf', function()
   local buf = vim.api.nvim_get_current_buf()
