@@ -1,31 +1,16 @@
-return {
-  {
-    'lewis6991/gitsigns.nvim',
-    event = 'VeryLazy',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-    keys = {
-      {
-        '<leader>gd',
-        function()
-          require('gitsigns').diffthis()
-        end,
-        desc = 'Gitsigns: Diff buffer vs HEAD',
-      },
-      {
-        '<leader>gb',
-        function()
-          require('gitsigns').blame_line { full = true }
-        end,
-        desc = 'Gitsigns: Blame line (full)',
-      },
-    },
+vim.pack.add {
+  'https://github.com/lewis6991/gitsigns.nvim',
+}
+
+require('gitsigns').setup {
+  signs = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = '_' },
+    topdelete = { text = '‾' },
+    changedelete = { text = '~' },
   },
 }
+
+vim.keymap.set('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>', { desc = 'Gitsigns: Diffview' })
+vim.keymap.set('n', '<leader>gb', '<cmd>Gitsigns blame_line<CR>', { desc = 'Gitsigns: Blame line' })

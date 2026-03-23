@@ -1,16 +1,23 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ','
-vim.g.have_nerd_font = true
--- vim.loader.enable()
-
-require 'core.lsp'
-
 require 'config.options'
 require 'config.autocmds'
 require 'config.keymaps'
+require 'config.lsp'
+require 'config.lsp-keymaps'
 
--- plugin-manager init
-require 'config.lazy'
+require 'plugins.colorscheme' -- Load first so colorscheme is inherited
+require 'plugins.mini' -- Load early since it contains setup
+require 'plugins.snacks'
+require 'plugins.treesitter'
+-- require 'plugins.whichkey'
+require 'plugins.lsp'
+require 'plugins.explorer'
+require 'plugins.fzf'
+require 'plugins.git'
+require 'plugins.conform'
+require 'plugins.undotree'
+require 'plugins.autocomplete'
+require 'plugins.quicker'
+require 'plugins.rainbow-delimiters'
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+vim.lsp.enable { 'lua_ls' }
+vim.lsp.enable { 'vtsls' }

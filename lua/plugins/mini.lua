@@ -1,104 +1,106 @@
-return {
-  { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
-    event = 'VeryLazy',
-    -- dependencies = {
-    --   'nvim-treesitter/nvim-treesitter-textobjects',
-    -- },
-    config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
-      --  - ci'  - [C]hange [I]nside [']quote
-      local ai = require 'mini.ai'
-      require('mini.ai').setup {
-        n_lines = 500,
-        -- custom_textobjects = {
-        --   a = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }), -- function arguments
-        --   c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),         -- class
-        --   o = ai.gen_spec.treesitter({                                                    -- code block
-        --     a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-        --     i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-        --   }),
-        --   f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
-        -- },
-      }
+vim.pack.add {
+  'https://github.com/nvim-mini/mini.nvim',
+}
 
-      -- require('mini.map').setup()
+-- TODO: Read up more on what this changes
+require('mini.basics').setup {
+  options = {
+    extra_ui = true,
+  },
+  mappings = {
+    basic = false,
+    option_toggle_prefix = '<leader>u',
+    windows = false,
+  },
+}
+require('mini.icons').setup()
+require('mini.ai').setup {
+  n_lines = 500,
+}
+require('mini.surround').setup()
+require('mini.bracketed').setup()
+require('mini.pairs').setup()
+require('mini.splitjoin').setup()
+require('mini.cursorword').setup()
+require('mini.notify').setup()
+require('mini.cmdline').setup()
+require('mini.sessions').setup()
+local starter = require 'mini.starter'
+starter.setup {
+  evaluate_single = true,
+  items = {
+    starter.sections.builtin_actions(),
+    starter.sections.sessions(5, true),
+    starter.sections.recent_files(10, false),
+    starter.sections.recent_files(10, true),
+  },
+  content_hooks = {
+    starter.gen_hook.adding_bullet(),
+    starter.gen_hook.indexing('all', { 'Builtin actions' }),
+    starter.gen_hook.padding(3, 2),
+  },
+}
+local statusline = require 'mini.statusline'
+statusline.setup { use_icons = vim.g.have_nerd_font }
+---@diagnostic disable-next-line: duplicate-set-field
+statusline.section_location = function()
+  return '%2l:%-2v'
+end
+local indentscope = require 'mini.indentscope'
+indentscope.setup {
+  draw = {
+    delay = 10,
+    animation = indentscope.gen_animation.none(),
+  },
+  symbol = '│',
+}
+local hipatterns = require 'mini.hipatterns'
+hipatterns.setup {
+  highlighters = {
+    -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+    fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+    hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+    todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+    note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
 
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
-      --
-      -- To prevent timeout from triggering native key
-      vim.keymap.set({ 'n', 'x' }, 's', '<Nop>')
-      require('mini.surround').setup()
+    -- Highlight hex color strings (`#rrggbb`) using that color
+    hex_color = hipatterns.gen_highlighter.hex_color(),
+  },
+}
+local miniclue = require 'mini.clue'
+miniclue.setup {
+  triggers = {
+    { mode = 'n', keys = '<leader>' },
+    { mode = 'n', keys = 'g' },
+    { mode = 'n', keys = '<C-W>' },
+    { mode = 'i', keys = '<C-x>' },
+    { mode = { 'n', 'x' }, keys = 'z' },
 
-      require('mini.splitjoin').setup {
-        mappings = {
-          toggle = 'gS',
-          split = '',
-          join = '',
-        },
-      }
+    { mode = 'n', keys = '[' },
+    { mode = 'n', keys = ']' },
 
-      require('mini.cmdline').setup()
+    -- Registers
+    { mode = { 'n', 'x' }, keys = '"' },
+    { mode = { 'i', 'c' }, keys = '<C-r>' },
+  },
 
-      require('mini.pairs').setup {
-        modes = {
-          insert = true,
-          command = true,
-          terminal = false,
-        },
-      }
+  clues = {
+    miniclue.gen_clues.g(),
+    miniclue.gen_clues.windows { submode_resize = true },
+    miniclue.gen_clues.builtin_completion(),
+    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.z(),
+    miniclue.gen_clues.square_brackets(),
+  },
 
-      require('mini.bracketed').setup()
-
-      require('mini.cursorword').setup()
-
-      local hipatterns = require 'mini.hipatterns'
-      hipatterns.setup {
-        highlighters = {
-          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-          fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-          hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
-          todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
-          note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
-
-          -- Highlight hex color strings (`#rrggbb`) using that color
-          hex_color = hipatterns.gen_highlighter.hex_color(),
-        },
-      }
-
-      -- local notify = require 'mini.notify'
-      -- notify.setup()
-      -- vim.notify = notify.make_notify {
-      --   ERROR = { duration = 5000 },
-      --   WARN = { duration = 4000 },
-      --   INFO = { duration = 3000 },
-      -- }
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
-    end,
+  window = {
+    delay = 300,
+    config = {
+      width = 'auto',
+      height = 10,
+      border = 'single',
+      col = 'auto',
+      row = 'auto',
+    },
   },
 }

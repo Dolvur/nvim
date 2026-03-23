@@ -1,5 +1,3 @@
--- https://github.com/adibhanna/nvim/blob/main/lua/core/lsp.lua
-
 ---@type vim.diagnostic.Opts
 vim.diagnostic.config {
   underline = true,
@@ -23,16 +21,6 @@ vim.diagnostic.config {
   },
   inlay_hints = { enabled = true },
 }
-
--- vim.api.nvim_create_autocmd('LspAttach', {
---   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
---   callback = function(args)
---     local client = vim.lsp.get_client_by_id(args.data.client_id)
---     if client.server_capabilities.inlayHintProvider then
---       vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
---     end
---   end,
--- })
 
 local function lsp_status()
   local bufnr = vim.api.nvim_get_current_buf()
@@ -97,24 +85,24 @@ local function check_lsp_capabilities()
     local caps = client.server_capabilities
 
     local capability_list = {
-      { 'Completion',                caps.completionProvider },
-      { 'Hover',                     caps.hoverProvider },
-      { 'Signature Help',            caps.signatureHelpProvider },
-      { 'Go to Definition',          caps.definitionProvider },
-      { 'Go to Declaration',         caps.declarationProvider },
-      { 'Go to Implementation',      caps.implementationProvider },
-      { 'Go to Type Definition',     caps.typeDefinitionProvider },
-      { 'Find References',           caps.referencesProvider },
-      { 'Document Highlight',        caps.documentHighlightProvider },
-      { 'Document Symbol',           caps.documentSymbolProvider },
-      { 'Workspace Symbol',          caps.workspaceSymbolProvider },
-      { 'Code Action',               caps.codeActionProvider },
-      { 'Code Lens',                 caps.codeLensProvider },
-      { 'Document Formatting',       caps.documentFormattingProvider },
+      { 'Completion', caps.completionProvider },
+      { 'Hover', caps.hoverProvider },
+      { 'Signature Help', caps.signatureHelpProvider },
+      { 'Go to Definition', caps.definitionProvider },
+      { 'Go to Declaration', caps.declarationProvider },
+      { 'Go to Implementation', caps.implementationProvider },
+      { 'Go to Type Definition', caps.typeDefinitionProvider },
+      { 'Find References', caps.referencesProvider },
+      { 'Document Highlight', caps.documentHighlightProvider },
+      { 'Document Symbol', caps.documentSymbolProvider },
+      { 'Workspace Symbol', caps.workspaceSymbolProvider },
+      { 'Code Action', caps.codeActionProvider },
+      { 'Code Lens', caps.codeLensProvider },
+      { 'Document Formatting', caps.documentFormattingProvider },
       { 'Document Range Formatting', caps.documentRangeFormattingProvider },
-      { 'Rename',                    caps.renameProvider },
-      { 'Folding Range',             caps.foldingRangeProvider },
-      { 'Selection Range',           caps.selectionRangeProvider },
+      { 'Rename', caps.renameProvider },
+      { 'Folding Range', caps.foldingRangeProvider },
+      { 'Selection Range', caps.selectionRangeProvider },
     }
 
     for _, cap in ipairs(capability_list) do
@@ -214,17 +202,3 @@ _G.git_branch = safe_git_branch
 _G.lsp_status = safe_lsp_status
 _G.formatter_status = safe_formatter_status
 _G.linter_status = safe_linter_status
-
--- THEN set the statusline
--- vim.opt.statusline = table.concat({
---   '%{v:lua.git_branch()}', -- Git branch
---   '%f', -- File name
---   '%m', -- Modified flag
---   '%r', -- Readonly flag
---   '%=', -- Right align
---   '%{v:lua.linter_status()}', -- Linter status
---   '%{v:lua.formatter_status()}', -- Formatter status
---   '%{v:lua.lsp_status()}', -- LSP status
---   ' %l:%c', -- Line:Column
---   ' %p%%', -- Percentage through file
--- }, ' ')
