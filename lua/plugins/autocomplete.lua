@@ -12,7 +12,18 @@ require('blink.cmp').setup {
   appearance = {
     nerd_font_variant = 'mono',
   },
-  completion = { documentation = { auto_show = false } },
+  completion = {
+    documentation = { auto_show = false },
+    menu = {
+      -- nvim-cmp style menu
+      draw = {
+        columns = {
+          { 'label', 'label_description', gap = 1 },
+          { 'kind_icon', gap = 1, 'kind' },
+        },
+      },
+    },
+  },
   sources = {
     default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
     providers = {
