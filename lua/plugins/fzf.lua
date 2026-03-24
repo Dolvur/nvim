@@ -12,6 +12,7 @@ require('fzf-lua').setup {
       ['ctrl-q'] = 'select-all+accept',
     },
   },
+  ui_select = true,
 }
 
 local set = vim.keymap.set

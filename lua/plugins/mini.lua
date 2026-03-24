@@ -24,7 +24,23 @@ require('mini.splitjoin').setup()
 require('mini.cursorword').setup()
 require('mini.notify').setup()
 require('mini.cmdline').setup()
-require('mini.sessions').setup()
+local sessions = require 'mini.sessions'
+sessions.setup()
+vim.keymap.set('n', '<leader>Sc', function()
+  vim.ui.input({ prompt = 'Create session: ' }, function(value)
+    if value == nil then
+      return
+    end
+    sessions.write(value)
+  end)
+end, { desc = 'Create session' })
+vim.keymap.set('n', '<leader>So', function()
+  sessions.select()
+end, { desc = 'Open session' })
+vim.keymap.set('n', '<leader>Sd', function()
+  sessions.select 'delete'
+end, { desc = 'Delete session' })
+-- require('mini.sessions').select
 local starter = require 'mini.starter'
 starter.setup {
   evaluate_single = true,
