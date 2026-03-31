@@ -23,7 +23,10 @@ require('nvim-treesitter').install {
   'vimdoc',
   'c',
   'cpp',
+  'csv',
   'python',
+  'diff',
+  'gitcommit',
 }
 
 local group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true })
@@ -48,7 +51,8 @@ vim.api.nvim_create_autocmd('FileType', {
     -- Optional: only set indentexpr if you really want TS indent everywhere it exists
     vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
-    -- Optional: install missing parser (but I'd generally avoid auto-install on FileType)
-    -- ts.install { lang }
+    -- folds using treesitter
+    -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    -- vim.wo.foldmethod = 'expr'
   end,
 })
