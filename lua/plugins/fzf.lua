@@ -17,7 +17,8 @@ require('fzf-lua').setup {
 
 local set = vim.keymap.set
 
-set('n', '<leader>f', '<cmd>FzfLua files<CR>', { desc = 'Find Files' })
+set('n', '<leader>ff', '<cmd>FzfLua files<CR>', { desc = 'Find Files' })
+set('n', '<leader>fc', '<cmd>FzfLua files cwd="~/.config/nvim"<CR>', { desc = 'Find Config Files' })
 
 set('n', '<leader>sk', '<cmd>FzfLua keymaps<CR>', { desc = 'Search Keymaps' })
 set('n', '<leader>sh', '<cmd>FzfLua helptags<CR>', { desc = 'Search Helptags' })
