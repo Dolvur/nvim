@@ -13,10 +13,12 @@ require('mini.basics').setup {
     windows = false,
   },
 }
+
 require('mini.misc').setup()
 MiniMisc.setup_auto_root()
 MiniMisc.setup_termbg_sync() -- Sync background with terminal background, fix borders
 MiniMisc.setup_restore_cursor()
+
 require('mini.icons').setup()
 require('mini.ai').setup {
   n_lines = 500,
@@ -27,6 +29,7 @@ require('mini.pairs').setup()
 require('mini.splitjoin').setup()
 require('mini.cursorword').setup()
 require('mini.notify').setup()
+
 require('mini.cmdline').setup()
 local sessions = require 'mini.sessions'
 sessions.setup()

@@ -1,3 +1,5 @@
+vim.cmd.packadd 'nohlsearch'
+
 vim.keymap.set('n', '<leader>uu', function()
   vim.cmd.packadd 'nvim.undotree'
   vim.cmd 'Undotree'
